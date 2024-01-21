@@ -1,34 +1,34 @@
 #include <stdio.h>
 #include <string.h>
 
-int hasObstacle(char *sensorData) {
-    for (int index = 0; index < strlen(sensorData); index++) {
-        if (sensorData[index] == 'O') {
+int robo(char *intake) {
+    for (int x = 0; x < strlen(intake); x++) {
+        if (intake[x] == 'U') {
             return 1;
         }
     }
     return 0;
 }
 
-void navigatePath(char *robotInstructions) {
-    while (hasObstacle(robotInstructions) == 1) {
-        for (int i = 0; i < strlen(robotInstructions); i++) {
-            if (robotInstructions[i] == 'F' && robotInstructions[i + 1] == 'O' && robotInstructions[i + 2] == 'R') {
-                memmove(&robotInstructions[i], &robotInstructions[i + 3], strlen(robotInstructions) - i);
-                robotInstructions[strlen(robotInstructions) - 3] = 'B';
+void shortestPath(char *input) {
+    while (robo(input) == 1) {
+        for (int i = 0; i < strlen(input); i++) {
+            if (input[i] == 'S' && input[i + 1] == 'U' && input[i + 2] == 'R') {
+                memmove(&input[i], &input[i + 3], strlen(input) - i);
+                input[strlen(input) - 3] = 'L';
                 break;
-            } else if (robotInstructions[i] == 'B' && robotInstructions[i + 1] == 'O' && robotInstructions[i + 2] == 'B') {
-                memmove(&robotInstructions[i], &robotInstructions[i + 3], strlen(robotInstructions) - i);
-                robotInstructions[strlen(robotInstructions) - 3] = 'L';
+            } else if (input[i] == 'R' && input[i + 1] == 'U' && input[i + 2] == 'R') {
+                memmove(&input[i], &input[i + 3], strlen(input) - i);
+                input[strlen(input) - 3] = 'S';
                 break;
             }
         }
     }
-    printf("Modified Instructions: %s\n", robotInstructions);
+    printf("%s", input);
 }
 
 int main() {
-    char instructions[] = "FORBOBFOR";
-    navigatePath(instructions);
+    char input[] = "SRURSUR";
+    shortestPath(input);
     return 0;
 }
